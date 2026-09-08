@@ -1,0 +1,372 @@
+{
+  "base_commit": "a7b941d468c10cee09f0ed26f9a47ec2b47da7f8",
+  "certified_commit": "15c78044b94d57c0cfd84eedc6b547b3c87b99d9",
+  "checks": [
+    {
+      "check": "commit_exists",
+      "details": {
+        "commit": "15c78044b94d57c0cfd84eedc6b547b3c87b99d9"
+      },
+      "passed": true
+    },
+    {
+      "check": "base_commit_exists",
+      "details": {
+        "base": "a7b941d468c10cee09f0ed26f9a47ec2b47da7f8"
+      },
+      "passed": true
+    },
+    {
+      "check": "bundle_complete:pycil-5ea1f7030bea",
+      "details": {
+        "missing": []
+      },
+      "passed": true
+    },
+    {
+      "check": "request_hash:pycil-5ea1f7030bea",
+      "details": {
+        "actual": "85ee9166f2a929f034f42dc37a66fb6962702aab6221f95ef9bd4ff1f6a1f578",
+        "expected": "85ee9166f2a929f034f42dc37a66fb6962702aab6221f95ef9bd4ff1f6a1f578"
+      },
+      "passed": true
+    },
+    {
+      "check": "completion_hash:pycil-5ea1f7030bea",
+      "details": {
+        "actual": "0ca22c291bca904783c8a2941d5484acdd6d67760558b475a3c7ec4f1016b100",
+        "expected": "0ca22c291bca904783c8a2941d5484acdd6d67760558b475a3c7ec4f1016b100"
+      },
+      "passed": true
+    },
+    {
+      "check": "completion_bound_to_request:pycil-5ea1f7030bea",
+      "details": {},
+      "passed": true
+    },
+    {
+      "check": "exact_commit:pycil-5ea1f7030bea",
+      "details": {
+        "checked_out": "15c78044b94d57c0cfd84eedc6b547b3c87b99d9",
+        "requested": "15c78044b94d57c0cfd84eedc6b547b3c87b99d9"
+      },
+      "passed": true
+    },
+    {
+      "check": "exit_code_zero:pycil-5ea1f7030bea",
+      "details": {
+        "exit_code": 0,
+        "status": "succeeded"
+      },
+      "passed": true
+    },
+    {
+      "check": "task_id:pycil-5ea1f7030bea",
+      "details": {},
+      "passed": true
+    },
+    {
+      "check": "checkout_via_bundle:pycil-5ea1f7030bea",
+      "details": {
+        "checkout_source": "/home/zhoujunjie/openresearch-bundles/pycil-5ea1f7030bea.bundle"
+      },
+      "passed": true
+    },
+    {
+      "check": "metric_parseable:pycil-5ea1f7030bea",
+      "details": {
+        "result": {
+          "avg_acc_cnn_mean": 0.5361666666666667,
+          "avg_acc_nme_mean": 0.5948499999999999,
+          "metric": "avg_incremental_acc_mean",
+          "schema": "openresearch.baseline-result.v1",
+          "source": "results_tmp/val_info.json",
+          "value": 0.5948499999999999
+        }
+      },
+      "passed": true
+    },
+    {
+      "check": "env_identity_present:pycil-5ea1f7030bea",
+      "details": {},
+      "passed": true
+    },
+    {
+      "check": "env_evaluator_hash:pycil-5ea1f7030bea",
+      "details": {
+        "got": "2e58757a72cd70432a50d9c97f690958ca3cf68e767a7ccd411942eb20b6c3b6"
+      },
+      "passed": true
+    },
+    {
+      "check": "env_cuda:pycil-5ea1f7030bea",
+      "details": {},
+      "passed": true
+    },
+    {
+      "check": "bundle_complete:pycil-5162a9a9d903",
+      "details": {
+        "missing": []
+      },
+      "passed": true
+    },
+    {
+      "check": "request_hash:pycil-5162a9a9d903",
+      "details": {
+        "actual": "7876e4b0498b66bd9721f98dba589ca486c6d6cfd0691a5db52e11b35c28398e",
+        "expected": "7876e4b0498b66bd9721f98dba589ca486c6d6cfd0691a5db52e11b35c28398e"
+      },
+      "passed": true
+    },
+    {
+      "check": "completion_hash:pycil-5162a9a9d903",
+      "details": {
+        "actual": "165468f44700aaf2d4e8332fde585f20fc344ad69761c2d22cb4727d28dfabaa",
+        "expected": "165468f44700aaf2d4e8332fde585f20fc344ad69761c2d22cb4727d28dfabaa"
+      },
+      "passed": true
+    },
+    {
+      "check": "completion_bound_to_request:pycil-5162a9a9d903",
+      "details": {},
+      "passed": true
+    },
+    {
+      "check": "exact_commit:pycil-5162a9a9d903",
+      "details": {
+        "checked_out": "15c78044b94d57c0cfd84eedc6b547b3c87b99d9",
+        "requested": "15c78044b94d57c0cfd84eedc6b547b3c87b99d9"
+      },
+      "passed": true
+    },
+    {
+      "check": "exit_code_zero:pycil-5162a9a9d903",
+      "details": {
+        "exit_code": 0,
+        "status": "succeeded"
+      },
+      "passed": true
+    },
+    {
+      "check": "task_id:pycil-5162a9a9d903",
+      "details": {},
+      "passed": true
+    },
+    {
+      "check": "checkout_via_bundle:pycil-5162a9a9d903",
+      "details": {
+        "checkout_source": "/home/zhoujunjie/openresearch-bundles/pycil-5162a9a9d903.bundle"
+      },
+      "passed": true
+    },
+    {
+      "check": "metric_parseable:pycil-5162a9a9d903",
+      "details": {
+        "result": {
+          "avg_acc_cnn_mean": 0.5361666666666667,
+          "avg_acc_nme_mean": 0.5948499999999999,
+          "metric": "avg_incremental_acc_mean",
+          "schema": "openresearch.baseline-result.v1",
+          "source": "results_tmp/val_info.json",
+          "value": 0.5948499999999999
+        }
+      },
+      "passed": true
+    },
+    {
+      "check": "env_identity_present:pycil-5162a9a9d903",
+      "details": {},
+      "passed": true
+    },
+    {
+      "check": "env_evaluator_hash:pycil-5162a9a9d903",
+      "details": {
+        "got": "2e58757a72cd70432a50d9c97f690958ca3cf68e767a7ccd411942eb20b6c3b6"
+      },
+      "passed": true
+    },
+    {
+      "check": "env_cuda:pycil-5162a9a9d903",
+      "details": {},
+      "passed": true
+    },
+    {
+      "check": "bundle_complete:pycil-0c64cead84a1",
+      "details": {
+        "missing": []
+      },
+      "passed": true
+    },
+    {
+      "check": "request_hash:pycil-0c64cead84a1",
+      "details": {
+        "actual": "07953e7ebff3cca244429f3f458f88d09184555e6d73884e96e452c0d11263d6",
+        "expected": "07953e7ebff3cca244429f3f458f88d09184555e6d73884e96e452c0d11263d6"
+      },
+      "passed": true
+    },
+    {
+      "check": "completion_hash:pycil-0c64cead84a1",
+      "details": {
+        "actual": "bcd75e07127956c84dc9cb6ff7a4d4c3799f4bb1b4b74fa766efa73255fd7401",
+        "expected": "bcd75e07127956c84dc9cb6ff7a4d4c3799f4bb1b4b74fa766efa73255fd7401"
+      },
+      "passed": true
+    },
+    {
+      "check": "completion_bound_to_request:pycil-0c64cead84a1",
+      "details": {},
+      "passed": true
+    },
+    {
+      "check": "exact_commit:pycil-0c64cead84a1",
+      "details": {
+        "checked_out": "15c78044b94d57c0cfd84eedc6b547b3c87b99d9",
+        "requested": "15c78044b94d57c0cfd84eedc6b547b3c87b99d9"
+      },
+      "passed": true
+    },
+    {
+      "check": "exit_code_zero:pycil-0c64cead84a1",
+      "details": {
+        "exit_code": 0,
+        "status": "succeeded"
+      },
+      "passed": true
+    },
+    {
+      "check": "task_id:pycil-0c64cead84a1",
+      "details": {},
+      "passed": true
+    },
+    {
+      "check": "checkout_via_bundle:pycil-0c64cead84a1",
+      "details": {
+        "checkout_source": "/home/zhoujunjie/openresearch-bundles/pycil-0c64cead84a1.bundle"
+      },
+      "passed": true
+    },
+    {
+      "check": "metric_parseable:pycil-0c64cead84a1",
+      "details": {
+        "result": {
+          "avg_acc_cnn_mean": 0.5361666666666667,
+          "avg_acc_nme_mean": 0.5948499999999999,
+          "metric": "avg_incremental_acc_mean",
+          "schema": "openresearch.baseline-result.v1",
+          "source": "results_tmp/val_info.json",
+          "value": 0.5948499999999999
+        }
+      },
+      "passed": true
+    },
+    {
+      "check": "env_identity_present:pycil-0c64cead84a1",
+      "details": {},
+      "passed": true
+    },
+    {
+      "check": "env_evaluator_hash:pycil-0c64cead84a1",
+      "details": {
+        "got": "2e58757a72cd70432a50d9c97f690958ca3cf68e767a7ccd411942eb20b6c3b6"
+      },
+      "passed": true
+    },
+    {
+      "check": "env_cuda:pycil-0c64cead84a1",
+      "details": {},
+      "passed": true
+    },
+    {
+      "check": "run_count",
+      "details": {
+        "required": 3,
+        "runs": 3
+      },
+      "passed": true
+    },
+    {
+      "check": "distinct_job_ids",
+      "details": {},
+      "passed": true
+    },
+    {
+      "check": "metric_spread_within_limit",
+      "details": {
+        "limit_percentage_points": 1.0,
+        "spread": 0.0,
+        "values": [
+          0.5948499999999999,
+          0.5948499999999999,
+          0.5948499999999999
+        ]
+      },
+      "passed": true
+    },
+    {
+      "check": "env_identity_consistent",
+      "details": {
+        "distinct_env_identities": 1
+      },
+      "passed": true
+    },
+    {
+      "check": "allowed_diff_only",
+      "details": {
+        "diff": [
+          "protocol/baseline-protocol.md",
+          "public_validation/run.sh"
+        ],
+        "disallowed": []
+      },
+      "passed": true
+    },
+    {
+      "check": "algorithm_unchanged",
+      "details": {
+        "note": "baseline certification must not alter the worker surface",
+        "worker_edit_paths": [
+          "algorithm.py"
+        ]
+      },
+      "passed": true
+    }
+  ],
+  "decision": "PASS",
+  "evidence_sha256": "bcea685a3d692de4c2028236e690a11a559a56296be67125483ff810afa9408d",
+  "metric_mean": 0.5948499999999999,
+  "metric_values": [
+    0.5948499999999999,
+    0.5948499999999999,
+    0.5948499999999999
+  ],
+  "protocol": "fml-lite-pycil-baseline-v1",
+  "runs": [
+    {
+      "duration_seconds": 1131.762622,
+      "exit_code": 0,
+      "finished_at": "2026-09-08T09:04:02.381276+00:00",
+      "job_id": "pycil-5ea1f7030bea",
+      "metric_value": 0.5948499999999999,
+      "started_at": "2026-09-08T08:45:10.618682+00:00"
+    },
+    {
+      "duration_seconds": 1098.925597,
+      "exit_code": 0,
+      "finished_at": "2026-09-08T09:22:31.367377+00:00",
+      "job_id": "pycil-5162a9a9d903",
+      "metric_value": 0.5948499999999999,
+      "started_at": "2026-09-08T09:04:12.441781+00:00"
+    },
+    {
+      "duration_seconds": 1105.548358,
+      "exit_code": 0,
+      "finished_at": "2026-09-08T09:41:06.012713+00:00",
+      "job_id": "pycil-0c64cead84a1",
+      "metric_value": 0.5948499999999999,
+      "started_at": "2026-09-08T09:22:40.464386+00:00"
+    }
+  ],
+  "schema": "openresearch.acceptance.v1",
+  "task": "pycil"
+}

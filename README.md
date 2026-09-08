@@ -61,4 +61,12 @@ Before SSH dispatch, the runner verifies that the exact candidate SHA is publish
 
 ## Current boundary
 
-The transport and evidence loop is implemented. The frozen task environments, datasets, public-validation entrypoints, hidden evaluator, acceptance schema implementation, and baseline measurements remain to be certified. A successful runner completion is an observation; it is not an acceptance verdict.
+The transport and evidence loop is implemented. The first task baseline is
+certified: `openresearch-pycil` reached `baseline_certified` on commit
+`15c78044b94d57c0cfd84eedc6b547b3c87b99d9` (tag `baseline/v1`) with three
+successful exact-SHA `ssh-bundle` runs of protocol `fml-lite-pycil-baseline-v1`
+(avg_incremental_acc_mean = 0.59485 each, spread 0.0 pp) and an independent
+verifier PASS (see `certification/pycil-baseline-v1/verifier-verdict.json`).
+The other seven tasks, the hidden-evaluator schema implementation, and
+holdout/test-split verification remain uncertified. A successful runner
+completion is an observation; it is not an acceptance verdict.

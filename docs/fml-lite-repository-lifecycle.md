@@ -274,3 +274,32 @@ Worker 不直接 merge、tag 或 push。它只产生候选修改；Git 状态转
 - 因此该服务器当前应显式使用 `ssh-bundle`，直到它到 GitHub 的网络链路被单独修复并复测。
 
 这只是 runner/transport 验证，不是 PyCIL baseline certification。
+
+## 11. PyCIL baseline certification record (2026-09-08)
+
+第一个 FML-bench-Lite 任务完成 baseline certification，流程与 §4 一致：
+
+- 协议冻结（`fml-lite-pycil-baseline-v1`）先于任何测量：upstream commit
+  `f3509b8ca3f2`、FML evaluator sha256 `2e58757a…b6c3b6`、CIFAR-100 md5
+  `eb9058c3…2a8d85`、split（30% val / 70% test，split_seed 42）、iCaRL 配置、
+  seed 1993、metric `avg_incremental_acc_mean`（NME）、预算 120 分钟、
+  晋升标准（3 次成功、exact commit、evaluator hash、环境身份、spread ≤1.0pp、
+  独立 verifier PASS）。唯一的测量前修订是把预算从 90 分钟放宽到 120 分钟。
+- 环境：`fuxin`（hangzhou_server），Ubuntu 20.04.6，Python 3.8.10 专用 venv，
+  torch 2.4.1+cu121，driver 550.78，单卡 RTX 3090（GPU 7 硬件掉卡，协议显式
+  固定 `CUDA_VISIBLE_DEVICES=0`）；依赖 lock sha256
+  `f8ae96df…0b28a4c`，数据集 sha256 `85cd44d0…5ba677a7`。
+- 传输：按 §10 记录的 GitHub 链路不稳定，全部使用 `ssh-bundle`。
+- 运行：exact-SHA `15c7804…7b99d9` 三次独立 fresh-checkout 运行全部
+  `succeeded`（exit 0），metric 均为 0.59485（spread 0.0pp，cudnn
+  deterministic），FML 参考 val 0.59107 / test 0.59517，位于预期范围。
+  一次早期失败派发 `pycil-dc34b51bac30`（run.sh bash 花括号展开 bug，
+  exit 2）append-only 保留并根因修复，未重写任何记录。
+- 验收：`openresearch.certify`（独立进程，不属于 worker/runner/goal 模型）
+  机械复算全部 44 项检查后输出 `{"decision": "PASS"}`，evidence_sha256
+  `bcea685a…9408d`；verdict 后才更新 `baseline_certified`、创建 tag
+  `baseline/v1`（指向被验证 commit）、更新 BASELINE.md 与本仓库文档。
+  证据包 auditable 副本提交于 `certification/pycil-baseline-v1/`。
+- 隐藏 test split（70%）未评估，保留给独立 holdout verification。
+
+后续七个任务可复用此流程；AutoResearch 候选循环必须以 `baseline/v1` 为起点。
