@@ -1,0 +1,7 @@
+.openresearch/
+*.egg-info/
+.pytest_cache/
+__pycache__/
+*.py[cod]
+build/
+dist/

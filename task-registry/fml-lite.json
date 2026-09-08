@@ -1,0 +1,104 @@
+{
+  "schema": "openresearch.task-registry.v1",
+  "benchmark": "FML-bench-Lite",
+  "fml_bench_url": "https://github.com/ServiceNow/Future-Machine-Learning.git",
+  "fml_bench_commit": "d336651ebea50c622c256f02ded82b68b4451fdc",
+  "tasks": [
+    {
+      "id": "pycil",
+      "title": "Continual Learning / PyCIL",
+      "repo": "openresearch-pycil",
+      "description": "FML-bench-Lite continual-learning AutoResearch task based on PyCIL",
+      "fml_task": "Continual_Learning_pycil",
+      "upstream_url": "https://github.com/LAMDA-CL/PyCIL.git",
+      "upstream_commit": "f3509b8ca3f20660ce4aa13f19d5283de81b4b35",
+      "metrics": {"avg_incremental_acc_mean": "higher"},
+      "worker_edit_paths": ["algorithm.py"],
+      "starter_files": [{"source": "algorithm.py", "destination": "algorithm.py"}]
+    },
+    {
+      "id": "usb",
+      "title": "Data Efficiency / USB",
+      "repo": "openresearch-usb",
+      "description": "FML-bench-Lite semi-supervised-learning AutoResearch task based on USB",
+      "fml_task": "Data_Efficiency_usb",
+      "upstream_url": "https://github.com/microsoft/Semi-supervised-learning.git",
+      "upstream_commit": "1ef4cbebcc0b368158315aeb425053858cf6c845",
+      "metrics": {"test_acc_mean": "higher"},
+      "worker_edit_paths": ["algorithm.py"],
+      "starter_files": [{"source": "algorithm.py", "destination": "algorithm.py"}]
+    },
+    {
+      "id": "coloredmnist",
+      "title": "Generalization / ColoredMNIST",
+      "repo": "openresearch-coloredmnist",
+      "description": "FML-bench-Lite domain-generalization AutoResearch task on ColoredMNIST",
+      "fml_task": "Generalization_domainbed",
+      "upstream_url": "https://github.com/facebookresearch/DomainBed.git",
+      "upstream_commit": "b93c22a1cfc3b2428398272c1a116c8de1f4139e",
+      "metrics": {"in_acc_mean": "higher"},
+      "worker_edit_paths": ["domainbed/algorithms.py", "domainbed/hparams_registry.py"],
+      "starter_files": []
+    },
+    {
+      "id": "officehome",
+      "title": "Generalization / OfficeHome",
+      "repo": "openresearch-officehome",
+      "description": "FML-bench-Lite domain-generalization AutoResearch task on OfficeHome",
+      "fml_task": "Generalization_domainbed_officehome",
+      "upstream_url": "https://github.com/facebookresearch/DomainBed.git",
+      "upstream_commit": "b93c22a1cfc3b2428398272c1a116c8de1f4139e",
+      "metrics": {"avg_acc_mean": "higher"},
+      "worker_edit_paths": ["domainbed/algorithms.py", "domainbed/hparams_registry.py"],
+      "starter_files": []
+    },
+    {
+      "id": "openood",
+      "title": "Robustness / OpenOOD",
+      "repo": "openresearch-openood",
+      "description": "FML-bench-Lite out-of-distribution detection AutoResearch task based on OpenOOD",
+      "fml_task": "Robustness_openood",
+      "upstream_url": "https://github.com/Jingkang50/OpenOOD.git",
+      "upstream_commit": "3c35632ee91b54b09d1f085d04f94744cece7d0b",
+      "metrics": {"auroc_mean": "higher", "fpr95_mean": "lower"},
+      "worker_edit_paths": ["algorithm.py", "split_config.json"],
+      "starter_files": [{"source": "algorithm.py", "destination": "algorithm.py"}, {"source": "split_config.json", "destination": "split_config.json"}]
+    },
+    {
+      "id": "opacus",
+      "title": "Privacy / Opacus",
+      "repo": "openresearch-opacus",
+      "description": "FML-bench-Lite differentially-private learning AutoResearch task based on Opacus",
+      "fml_task": "Privacy_opacus",
+      "upstream_url": "https://github.com/pytorch/opacus.git",
+      "upstream_commit": "6dc0a27f995bee5a261dc55a7ab81a9a5ce5d3d1",
+      "metrics": {"test_acc_mean": "higher"},
+      "worker_edit_paths": ["algorithm.py", "split_config.json"],
+      "starter_files": [{"source": "algorithm.py", "destination": "algorithm.py"}, {"source": "split_config.json", "destination": "split_config.json"}]
+    },
+    {
+      "id": "privacymeter",
+      "title": "Privacy / PrivacyMeter",
+      "repo": "openresearch-privacymeter",
+      "description": "FML-bench-Lite membership-inference defense AutoResearch task based on PrivacyMeter",
+      "fml_task": "Privacy_privacymeter",
+      "upstream_url": "https://github.com/privacytrustlab/ml_privacy_meter.git",
+      "upstream_commit": "e384af8fd9319b8eeb1303aa82474df1441e3c59",
+      "metrics": {"AUC_gap_mean": "lower", "TPR@0.1%FPR_mean": "lower", "TPR@0.0%FPR_mean": "lower", "test_acc_mean": "higher"},
+      "worker_edit_paths": ["models/", "audit.py", "util.py", "get_signals.py", "run_mia.py", "configs/"],
+      "starter_files": []
+    },
+    {
+      "id": "art",
+      "title": "Robustness / ART",
+      "repo": "openresearch-art",
+      "description": "FML-bench-Lite poisoning-defense AutoResearch task based on ART",
+      "fml_task": "Robustness_and_Reliability_art",
+      "upstream_url": "https://github.com/Trusted-AI/adversarial-robustness-toolbox.git",
+      "upstream_commit": "5ddd8ef204a8352d19d4bd212a4de5d4b7ca6fa9",
+      "metrics": {"clean_acc_mean": "higher", "poison_acc_mean": "lower", "resist_acc_mean": "higher", "defense_score_mean": "higher"},
+      "worker_edit_paths": ["model.py", "trainer.py", "split_config.json"],
+      "starter_files": [{"source": "model.py", "destination": "model.py"}, {"source": "trainer.py", "destination": "trainer.py"}, {"source": "split_config.json", "destination": "split_config.json"}]
+    }
+  ]
+}
