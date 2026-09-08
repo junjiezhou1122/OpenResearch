@@ -57,7 +57,7 @@ openresearch run \
   -- bash -lc './public_validation/run.sh'
 ```
 
-The runner never identifies a candidate by a moving branch name and never uses `git pull` in a shared working tree. See [the remote runner contract](docs/remote-runner-contract.md) and [the FML-Lite repository lifecycle](docs/fml-lite-repository-lifecycle.md).
+Before SSH dispatch, the runner verifies that the exact candidate SHA is published at the canonical remote. It never identifies a run by a moving branch name and never uses `git pull` in a shared working tree. See [the remote runner contract](docs/remote-runner-contract.md) and [the FML-Lite repository lifecycle](docs/fml-lite-repository-lifecycle.md).
 
 ## Current boundary
 

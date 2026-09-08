@@ -4,6 +4,7 @@ from pathlib import Path
 
 import pytest
 
+from openresearch.cli import _assert_published
 from openresearch.contracts import JobRequest, utc_now
 from openresearch.materialize import materialize_task
 from openresearch.runner import LocalGitRunner, run_recorded, verify_completion
@@ -129,3 +130,18 @@ def test_materializer_freezes_upstream_and_does_not_certify_baseline(tmp_path: P
     assert (target / "source.py").read_text() == "UPSTREAM = True\n"
     assert len(git(["rev-list", "--parents", "-n", "1", tagged_commit], target).split()) == 1
     assert "baseline/v1" not in git(["tag", "--list"], target).splitlines()
+
+
+def test_remote_runner_requires_candidate_to_be_published(tmp_path: Path) -> None:
+    repo, first = make_repository(tmp_path)
+    remote = tmp_path / "remote.git"
+    remote.mkdir()
+    git(["init", "--bare"], remote)
+    git(["remote", "add", "origin", str(remote)], repo)
+    git(["push", "origin", f"{first}:refs/heads/published"], repo)
+    _assert_published(str(remote), first)
+
+    unpublished = git(["rev-parse", "HEAD"], repo)
+    assert unpublished != first
+    with pytest.raises(RuntimeError, match="push the exact commit first"):
+        _assert_published(str(remote), unpublished)

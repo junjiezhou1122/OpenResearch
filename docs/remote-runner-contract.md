@@ -31,6 +31,7 @@ Two explicit SSH transports implement that invariant:
 
 - abstracts local and SSH execution behind the same `RunnerBackend` contract;
 - binds a run to task, protocol, repository, commit, command and timeout;
+- refuses SSH dispatch until the exact candidate commit is published at a canonical remote ref;
 - preserves command failures instead of converting them into success;
 - returns the evidence bundle to the local control plane;
 - appends dispatch, completion and infrastructure-failure events.

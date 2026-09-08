@@ -27,6 +27,30 @@ def _full_sha(repository: Path) -> str:
     return sha
 
 
+def _assert_published(repository_url: str, commit_sha: str) -> None:
+    env = os.environ.copy()
+    for key in tuple(env):
+        if key == "GIT_CONFIG_COUNT" or key.startswith("GIT_CONFIG_KEY_") or key.startswith("GIT_CONFIG_VALUE_"):
+            env.pop(key)
+    result = subprocess.run(
+        ["git", "ls-remote", "--refs", repository_url],
+        text=True,
+        capture_output=True,
+        check=False,
+        env=env,
+    )
+    if result.returncode != 0:
+        raise RuntimeError(
+            f"cannot verify published candidate at {repository_url!r}: {result.stderr.strip()}"
+        )
+    refs = [line.split(maxsplit=1) for line in result.stdout.splitlines() if line.strip()]
+    matching_refs = [ref for sha, ref in refs if sha == commit_sha]
+    if not matching_refs:
+        raise RuntimeError(
+            f"candidate {commit_sha} is not the tip of any ref at {repository_url!r}; push the exact commit first"
+        )
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="openresearch")
     subparsers = parser.add_subparsers(dest="action", required=True)
@@ -76,6 +100,11 @@ def main(argv: list[str] | None = None) -> int:
         raise SystemExit("a command is required after --")
     command = args.command[1:] if args.command[0] == "--" else args.command
     repository = args.repo.resolve()
+    commit_sha = _full_sha(repository)
+    if args.backend in {"ssh", "ssh-bundle"}:
+        if not args.repo_url:
+            raise SystemExit(f"--repo-url is required for the {args.backend} backend")
+        _assert_published(args.repo_url, commit_sha)
     job_id = f"{args.task}-{uuid.uuid4().hex[:12]}"
     checkout_source = None
     if args.backend == "ssh-bundle":
@@ -84,7 +113,7 @@ def main(argv: list[str] | None = None) -> int:
         job_id=job_id,
         task_id=args.task,
         repository=args.repo_url or str(repository),
-        commit_sha=_full_sha(repository),
+        commit_sha=commit_sha,
         command=tuple(command),
         protocol_id=args.protocol,
         timeout_seconds=args.timeout,
@@ -97,14 +126,10 @@ def main(argv: list[str] | None = None) -> int:
     elif args.backend == "ssh":
         if not args.ssh_target:
             raise SystemExit("--ssh-target is required for the ssh backend")
-        if not args.repo_url:
-            raise SystemExit("--repo-url is required for the ssh backend")
         backend = SSHGitRunner(args.ssh_target, args.remote_jobs_root)
     else:
         if not args.ssh_target:
             raise SystemExit("--ssh-target is required for the ssh-bundle backend")
-        if not args.repo_url:
-            raise SystemExit("--repo-url is required for the ssh-bundle backend")
         backend = SSHBundleRunner(
             args.ssh_target,
             args.remote_jobs_root,
