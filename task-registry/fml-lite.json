@@ -30,7 +30,12 @@
         "avg_incremental_acc_mean": 0.59485
       },
       "baseline_protocol": "fml-lite-pycil-baseline-v1",
-      "baseline_status": "baseline_certified"
+      "baseline_status": "baseline_certified",
+      "incumbent_commit": "e5cb6efa533369eaf24db8fc5c8f7700e4588a6c",
+      "incumbent_tag": "incumbent/v2",
+      "incumbent_metric": {
+        "avg_incremental_acc_mean": 0.60705
+      }
     },
     {
       "id": "usb",
