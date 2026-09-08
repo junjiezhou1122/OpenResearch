@@ -95,8 +95,15 @@ def main() -> int:
               {"status": completion.get("status"), "exit_code": completion.get("exit_code")})
         check("protocol_id", request.get("protocol_id") == "fml-lite-pycil-loop-v1",
               {"got": request.get("protocol_id")})
-        check("command", request.get("command") == ["bash", "public_validation/run.sh", "val"],
-              {"got": request.get("command")})
+        command = list(request.get("command") or [])
+        # Two accepted dispatch forms (see ledger amendment 2026-09-08T23:20Z):
+        #   frozen:        ["bash", "public_validation/run.sh", "val"]
+        #   env-prefixed:  ["env", "CUDA_VISIBLE_DEVICES=<n>", "bash", "public_validation/run.sh", "val"]
+        if command[:1] == ["env"] and len(command) >= 2 and command[1].startswith("CUDA_VISIBLE_DEVICES="):
+            command_ok = command[2:] == ["bash", "public_validation/run.sh", "val"]
+        else:
+            command_ok = command == ["bash", "public_validation/run.sh", "val"]
+        check("command", command_ok, {"got": command})
         check("host", completion.get("runtime", {}).get("hostname") == EXPECTED_HOST,
               {"got": completion.get("runtime", {}).get("hostname")})
 
