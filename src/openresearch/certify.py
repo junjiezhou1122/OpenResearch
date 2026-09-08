@@ -77,6 +77,8 @@ def main() -> int:
     parser.add_argument("--state-root", required=True, type=Path)
     parser.add_argument("--job-ids", required=True)
     parser.add_argument("--commit", required=True)
+    parser.add_argument("--base-commit", required=True,
+                        help="imported starter commit; allowed diff is checked base..commit")
     parser.add_argument("--evaluator-sha256", required=True)
     parser.add_argument("--allowed-harness-paths", default="")
     parser.add_argument("--min-runs", type=int, default=MIN_RUNS)
@@ -92,11 +94,11 @@ def main() -> int:
     job_ids = [job.strip() for job in args.job_ids.split(",") if job.strip()]
     artifacts_root = args.state_root / "artifacts"
 
-    # ---- check 0: commit exists and is a descendant of its parent in the repo ----
+    # ---- check 0: commits exist in the repo ----
     commit = git(args.repo, "rev-parse", f"{args.commit}^{{commit}}")
-    parent = git(args.repo, "rev-parse", f"{args.commit}^")
+    base = git(args.repo, "rev-parse", f"{args.base_commit}^{{commit}}")
     check("commit_exists", bool(commit), {"commit": commit})
-    check("parent_resolvable", bool(parent), {"parent": parent})
+    check("base_commit_exists", bool(base), {"base": base})
 
     # ---- per-run bundle checks ----
     values: list[float] = []
@@ -198,11 +200,15 @@ def main() -> int:
     check("env_identity_consistent", len({json.dumps(e, sort_keys=True) for e in env_identities}) == 1,
           {"distinct_env_identities": len({json.dumps(e, sort_keys=True) for e in env_identities})})
 
-    # ---- allowed-diff check against parent commit ----
-    diff = git(args.repo, "diff", "--name-only", parent, commit).splitlines()
+    # ---- allowed-diff check: base (imported starter) -> certified commit ----
+    diff = git(args.repo, "diff", "--name-only", base, commit).splitlines()
     allowed = [p for p in args.allowed_harness_paths.split(",") if p.strip()]
     disallowed = sorted(set(diff) - set(allowed))
     check("allowed_diff_only", not disallowed, {"diff": diff, "disallowed": disallowed})
+    algorithm_unchanged = git(args.repo, "diff", "--name-only", base, commit, "--", "algorithm.py") == ""
+    check("algorithm_unchanged", algorithm_unchanged,
+          {"worker_edit_paths": ["algorithm.py"],
+           "note": "baseline certification must not alter the worker surface"})
 
     # ---- evidence bundle hash ----
     evidence_hasher = hashlib.sha256()
@@ -214,7 +220,8 @@ def main() -> int:
                 evidence_hasher.update(f"{job_id}/{name}\n".encode())
                 evidence_hasher.update(sha256_file(path).encode())
     evidence_hasher.update(f"commit={commit}\n".encode())
-    evidence_hasher.update(f"diff={git(args.repo, 'diff', parent, commit)}".encode())
+    evidence_hasher.update(f"base={base}\n".encode())
+    evidence_hasher.update(f"diff={git(args.repo, 'diff', base, commit)}".encode())
     evidence_sha256 = evidence_hasher.hexdigest()
 
     decision = "PASS" if all(item["passed"] for item in checks) else "FAIL"
@@ -223,7 +230,7 @@ def main() -> int:
         "task": args.task,
         "protocol": "fml-lite-pycil-baseline-v1",
         "certified_commit": commit,
-        "parent_commit": parent,
+        "base_commit": base,
         "runs": per_run_details,
         "metric_values": values,
         "metric_mean": sum(values) / len(values) if values else None,
