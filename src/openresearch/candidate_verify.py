@@ -124,6 +124,12 @@ def main() -> int:
                          args.incumbent_commit, args.candidate_commit).splitlines()
         check("diff_confined_to_algorithm", diff_files in ([], ["algorithm.py"]),
               {"diff": diff_files})
+        # G1.5: lineage hygiene — the candidate must be a single commit whose
+        # parent IS the incumbent commit (prevents stacking unregistered
+        # interventions from other candidate branches).
+        parent = git(args.repo, "rev-parse", f"{args.candidate_commit}^")
+        check("candidate_parent_is_incumbent", parent == args.incumbent_commit,
+              {"parent": parent, "incumbent": args.incumbent_commit})
 
         # G3: memory budget unchanged in candidate tree
         candidate_algo = git(args.repo, "show", f"{args.candidate_commit}:algorithm.py")
@@ -147,6 +153,13 @@ def main() -> int:
 
     decision = "ACCEPT" if all(c["passed"] for c in checks) else "REJECT"
 
+    # Full diff text for auditability (empty if bundle failed earlier checks)
+    diff_text = ""
+    try:
+        diff_text = git(args.repo, "diff", args.incumbent_commit, args.candidate_commit)
+    except RuntimeError:
+        diff_text = "<unavailable>"
+
     evidence_hasher = hashlib.sha256()
     for name in required:
         path = job_dir / name
@@ -169,6 +182,7 @@ def main() -> int:
         "prediction": args.prediction,
         "decision": decision,
         "evidence_sha256": evidence_sha256,
+        "diff": diff_text,
         "checks": checks,
     }
     args.out.parent.mkdir(parents=True, exist_ok=True)
